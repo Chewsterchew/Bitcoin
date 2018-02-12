@@ -1,4 +1,4 @@
-package us._donut_.bitcoin;
+package us._donut_.litecoin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,10 +19,10 @@ import java.util.*;
 
 class Util {
 
-    private Bitcoin plugin;
+    private Litecoin plugin;
     private Map<UUID, String> skullTextures = new HashMap<>();
 
-    Util(Bitcoin pluginInstance) {
+    Util(Litecoin pluginInstance) {
         plugin = pluginInstance;
     }
 
@@ -35,23 +35,23 @@ class Util {
     }
 
     void loadConfigDefaults() {
-        YamlConfiguration bitcoinConfig = plugin.getBitcoinConfig();
-        if (!bitcoinConfig.contains("bitcoin_value")) { bitcoinConfig.set("bitcoin_value", 1000); }
-        if (!bitcoinConfig.contains("amount_in_bank")) { bitcoinConfig.set("amount_in_bank", 0); }
-        if (!bitcoinConfig.contains("bitcoin_display_rounding")) { bitcoinConfig.set("bitcoin_display_rounding", 5); }
-        if (!bitcoinConfig.contains("purchase_tax_percentage")) { bitcoinConfig.set("purchase_tax_percentage", 15); }
-        if (!bitcoinConfig.contains("exchange_currency_symbol")) { bitcoinConfig.set("exchange_currency_symbol", "$"); }
-        if (!bitcoinConfig.contains("min_bitcoin_value_fluctuation")) { bitcoinConfig.set("min_bitcoin_value_fluctuation", 0); }
-        if (!bitcoinConfig.contains("max_bitcoin_value_fluctuation")) { bitcoinConfig.set("max_bitcoin_value_fluctuation", 100); }
-        if (!bitcoinConfig.contains("fluctuation_frequency")) { bitcoinConfig.set("fluctuation_frequency", "6:00"); }
-        if (!bitcoinConfig.contains("min_mining_reward")) { bitcoinConfig.set("min_mining_reward", 10); }
-        if (!bitcoinConfig.contains("max_mining_reward")) { bitcoinConfig.set("max_mining_reward", 50); }
-        if (!bitcoinConfig.contains("circulation_limit")) { bitcoinConfig.set("circulation_limit", -1); }
-        if (!bitcoinConfig.contains("world")) { bitcoinConfig.set("world", "world"); }
-        if (!bitcoinConfig.contains("new_mining_puzzle_delay")) { bitcoinConfig.set("new_mining_puzzle_delay", 0); }
-        if (!bitcoinConfig.contains("use_playerpoints")) { bitcoinConfig.set("use_playerpoints", false); }
-        if (!bitcoinConfig.contains("use_pointsapi")) { bitcoinConfig.set("use_pointsapi", false); }
-        saveYml(plugin.getConfigFile(), bitcoinConfig);
+        YamlConfiguration litecoinConfig = plugin.getLitecoinConfig();
+        if (!litecoinConfig.contains("litecoin_value")) { litecoinConfig.set("litecoin_value", 1000); }
+        if (!litecoinConfig.contains("amount_in_bank")) { litecoinConfig.set("amount_in_bank", 0); }
+        if (!litecoinConfig.contains("litecoin_display_rounding")) { litecoinConfig.set("litecoin_display_rounding", 5); }
+        if (!litecoinConfig.contains("purchase_tax_percentage")) { litecoinConfig.set("purchase_tax_percentage", 15); }
+        if (!litecoinConfig.contains("exchange_currency_symbol")) { litecoinConfig.set("exchange_currency_symbol", "$"); }
+        if (!litecoinConfig.contains("min_litecoin_value_fluctuation")) { litecoinConfig.set("min_litecoin_value_fluctuation", 0); }
+        if (!litecoinConfig.contains("max_litecoin_value_fluctuation")) { litecoinConfig.set("max_litecoin_value_fluctuation", 100); }
+        if (!litecoinConfig.contains("fluctuation_frequency")) { litecoinConfig.set("fluctuation_frequency", "6:00"); }
+        if (!litecoinConfig.contains("min_mining_reward")) { litecoinConfig.set("min_mining_reward", 10); }
+        if (!litecoinConfig.contains("max_mining_reward")) { litecoinConfig.set("max_mining_reward", 50); }
+        if (!litecoinConfig.contains("circulation_limit")) { litecoinConfig.set("circulation_limit", -1); }
+        if (!litecoinConfig.contains("world")) { litecoinConfig.set("world", "world"); }
+        if (!litecoinConfig.contains("new_mining_puzzle_delay")) { litecoinConfig.set("new_mining_puzzle_delay", 0); }
+        if (!litecoinConfig.contains("use_playerpoints")) { litecoinConfig.set("use_playerpoints", false); }
+        if (!litecoinConfig.contains("use_pointsapi")) { litecoinConfig.set("use_pointsapi", false); }
+        saveYml(plugin.getConfigFile(), litecoinConfig);
     }
 
     ItemStack createItemStack(Material item, Short dataValue, String name, String lore) {

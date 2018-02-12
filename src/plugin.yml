@@ -1,94 +1,94 @@
-name: Bitcoin
+name: Litecoin
 version: 1.4
-author: _Donut_
-main: us._donut_.bitcoin.Bitcoin
+author: ChewLeKitten
+main: us._donut_.litecoin.Litecoin
 depend: [Vault]
 softdepend: [PlayerPoints, PointsAPI, PlaceholderAPI, MVdWPlaceholderAPI]
 commands:
-  bitcoin:
-    description: Opens bitcoin menu
-    usage: /bitcoin
+  litecoin:
+    description: Opens litecoin menu
+    usage: /litecoin
 permissions:
-  bitcoin.*:
-    description: Gives access to all bitcoin commands
+  litecoin.*:
+    description: Gives access to all litecoin commands
     children:
-      bitcoin.main: true
-      bitcoin.help: true
-      bitcoin.value: true
-      bitcoin.bank: true
-      bitcoin.tax: true
-      bitcoin.mine: true
-      bitcoin.sell: true
-      bitcoin.buy: true
-      bitcoin.transfer: true
-      bitcoin.give: true
-      bitcoin.remove: true
-      bitcoin.set: true
-      bitcoin.reload: true
-      bitcoin.stats: true
-      bitcoin.top: true
-      bitcoin.circulation: true
-      bitcoin.gui.transfer: true
-      bitcoin.gui.buy: true
-      bitcoin.gui.sell: true
-      bitcoin.gui.mine: true
-  bitcoin.main:
-    description: Allows /bitcoin
+      litecoin.main: true
+      litecoin.help: true
+      litecoin.value: true
+      litecoin.bank: true
+      litecoin.tax: true
+      litecoin.mine: true
+      litecoin.sell: true
+      litecoin.buy: true
+      litecoin.transfer: true
+      litecoin.give: true
+      litecoin.remove: true
+      litecoin.set: true
+      litecoin.reload: true
+      litecoin.stats: true
+      litecoin.top: true
+      litecoin.circulation: true
+      litecoin.gui.transfer: true
+      litecoin.gui.buy: true
+      litecoin.gui.sell: true
+      litecoin.gui.mine: true
+  litecoin.main:
+    description: Allows /litecoin
     default: op
-  bitcoin.help:
-    description: Allows /bitcoin help
+  litecoin.help:
+    description: Allows /litecoin help
     default: op
-  bitcoin.value:
-    description: Allows /bitcoin value
+  litecoin.value:
+    description: Allows /litecoin value
     default: op
-  bitcoin.bank:
-    description: Allows /bitcoin bank
+  litecoin.bank:
+    description: Allows /litecoin bank
     default: op
-  bitcoin.tax:
-    description: Allows /bitcoin tax
+  litecoin.tax:
+    description: Allows /litecoin tax
     default: op
-  bitcoin.mine:
-    description: Allows /bitcoin mine
+  litecoin.mine:
+    description: Allows /litecoin mine
     default: op
-  bitcoin.sell:
-    description: Allows /bitcoin sell
+  litecoin.sell:
+    description: Allows /litecoin sell
     default: op
-  bitcoin.buy:
-    description: Allows /bitcoin buy
+  litecoin.buy:
+    description: Allows /litecoin buy
     default: op
-  bitcoin.transfer:
-    description: Allows /bitcoin transfer
+  litecoin.transfer:
+    description: Allows /litecoin transfer
     default: op
-  bitcoin.give:
-    description: Allows /bitcoin give
+  litecoin.give:
+    description: Allows /litecoin give
     default: op
-  bitcoin.remove:
-    description: Allows /bitcoin remove
+  litecoin.remove:
+    description: Allows /litecoin remove
     default: op
-  bitcoin.set:
-    description: Allows /bitcoin set
+  litecoin.set:
+    description: Allows /litecoin set
     default: op
-  bitcoin.reload:
-    description: Allows /bitcoin reload
+  litecoin.reload:
+    description: Allows /litecoin reload
     default: op
-  bitcoin.stats:
-    description: Allows /bitcoin stats
+  litecoin.stats:
+    description: Allows /litecoin stats
     default: op
-  bitcoin.top:
-    description: Allows /bitcoin top
+  litecoin.top:
+    description: Allows /litecoin top
     default: op
-  bitcoin.circulation:
-    description: Allows /bitcoin circulation
+  litecoin.circulation:
+    description: Allows /litecoin circulation
     default: op
-  bitcoin.gui.transfer:
+  litecoin.gui.transfer:
     description: Allows transferring from GUI
     default: op
-  bitcoin.gui.buy:
+  litecoin.gui.buy:
     description: Allows buying from GUI
     default: op
-  bitcoin.gui.sell:
+  litecoin.gui.sell:
     description: Allows selling from GUI
     default: op
-  bitcoin.gui.mine:
+  litecoin.gui.mine:
     description: Allows mining from GUI
     default: op

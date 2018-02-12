@@ -1,4 +1,4 @@
-package us._donut_.bitcoin;
+package us._donut_.litecoin;
 
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -8,13 +8,13 @@ import java.util.*;
 
 class Sounds {
 
-    private Bitcoin plugin;
+    private Litecoin plugin;
     private Util util;
     private File soundsFile;
     private YamlConfiguration soundsConfig;
     private Map<String, Sound> sounds = new HashMap<>();
 
-    Sounds(Bitcoin pluginInstance) {
+    Sounds(Litecoin pluginInstance) {
         plugin = pluginInstance;
         util = pluginInstance.getUtil();
         reload();

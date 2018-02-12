@@ -1,29 +1,29 @@
-package us._donut_.bitcoin;
+package us._donut_.litecoin;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
-public class Bitcoin extends JavaPlugin {
+public class Litecoin extends JavaPlugin {
 
     private Util util;
-    private BitcoinManager bitcoinManager;
+    private LitecoinManager litecoinManager;
     private Mining mining;
-    private BitcoinMenu bitcoinMenu;
+    private LitecoinMenu litecoinMenu;
     private File configFile;
-    private YamlConfiguration bitcoinConfig;
+    private YamlConfiguration litecoinConfig;
     private ServerEconomy economy;
     private Messages messages;
     private Sounds sounds;
-    private static BitcoinAPI api;
+    private static LitecoinAPI api;
 
     @Override
     public void onEnable() {
         util = new Util(this);
 
         configFile = new File(getDataFolder(), "config.yml");
-        bitcoinConfig = YamlConfiguration.loadConfiguration(configFile);
+        litecoinConfig = YamlConfiguration.loadConfiguration(configFile);
         if (!configFile.exists()) { getLogger().info("Generated config.yml!"); }
         if (new File(getDataFolder(), "Player Data").mkdirs()) { getLogger().info("Generated player data folder!"); }
         util.loadConfigDefaults();
@@ -31,15 +31,15 @@ public class Bitcoin extends JavaPlugin {
         economy = new ServerEconomy(this);
         messages = new Messages(this);
         sounds = new Sounds(this);
-        getServer().getPluginManager().registerEvents(bitcoinManager = new BitcoinManager(this), this);
+        getServer().getPluginManager().registerEvents(litecoinManager = new LitecoinManager(this), this);
         getServer().getPluginManager().registerEvents(mining = new Mining(this), this);
-        getServer().getPluginManager().registerEvents(bitcoinMenu = new BitcoinMenu(this), this);
-        BitcoinCommand bitcoinCommand;
-        getServer().getPluginManager().registerEvents(bitcoinCommand = new BitcoinCommand(this), this);
-        getCommand("bitcoin").setExecutor(bitcoinCommand);
+        getServer().getPluginManager().registerEvents(litecoinMenu = new LitecoinMenu(this), this);
+        LitecoinCommand litecoinCommand;
+        getServer().getPluginManager().registerEvents(litecoinCommand = new LitecoinCommand(this), this);
+        getCommand("litecoin").setExecutor(litecoinCommand);
         if (getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) { new RegisterPlaceholderAPI(this).hook(); }
         if (getServer().getPluginManager().isPluginEnabled("MVdWPlaceholderAPI")) { new RegisterMVdWPlaceholderAPI(this); }
-        api = new BitcoinAPI(this);
+        api = new LitecoinAPI(this);
         getLogger().info("Enabled!");
     }
 
@@ -50,24 +50,24 @@ public class Bitcoin extends JavaPlugin {
 
     void reload() {
         configFile = new File(getDataFolder(), "config.yml");
-        bitcoinConfig = YamlConfiguration.loadConfiguration(configFile);
+        litecoinConfig = YamlConfiguration.loadConfiguration(configFile);
         messages.reload();
         sounds.reload();
         economy.reload();
-        bitcoinMenu.reload();
-        bitcoinManager.reload();
+        litecoinMenu.reload();
+        litecoinManager.reload();
         mining.reload();
     }
 
     Util getUtil() { return util; }
-    BitcoinManager getBitcoinManager() { return bitcoinManager; }
+    LitecoinManager getLitecoinManager() { return litecoinManager; }
     Mining getMining() { return mining; }
-    BitcoinMenu getBitcoinMenu() { return bitcoinMenu; }
+    LitecoinMenu getLitecoinMenu() { return litecoinMenu; }
     ServerEconomy getEconomy() { return economy; }
     File getConfigFile() { return configFile; }
-    YamlConfiguration getBitcoinConfig() { return bitcoinConfig; }
+    YamlConfiguration getLitecoinConfig() { return litecoinConfig; }
     Messages getMessages() { return messages; }
     Sounds getSounds() { return sounds; }
 
-    public static BitcoinAPI getAPI() { return api; }
+    public static LitecoinAPI getAPI() { return api; }
 }

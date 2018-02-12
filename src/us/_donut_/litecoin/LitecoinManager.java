@@ -1,4 +1,4 @@
-package us._donut_.bitcoin;
+package us._donut_.litecoin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -15,18 +15,18 @@ import java.io.File;
 import java.util.*;
 import java.util.stream.Collectors;
 
-class BitcoinManager implements Listener {
+class LitecoinManager implements Listener {
 
-    private Bitcoin plugin;
+    private Litecoin plugin;
     private Util util;
     private Messages messages;
     private Sounds sounds;
     private Map<UUID, Double> balances = new HashMap<>();
     private Map<UUID, Integer> puzzlesSolved = new HashMap<>();
-    private Map<UUID, Double> bitcoinsMined = new HashMap<>();
+    private Map<UUID, Double> litecoinsMined = new HashMap<>();
     private Map<UUID, File> playerFiles = new HashMap<>();
     private Map<UUID, YamlConfiguration> playerFileConfigs = new HashMap<>();
-    private double bitcoinValue;
+    private double litecoinValue;
     private int displayRoundAmount;
     private double minFluctuation;
     private double maxFluctuation;
@@ -38,7 +38,7 @@ class BitcoinManager implements Listener {
     private BukkitTask timeChecker;
     private BukkitTask frequencyChecker;
 
-    BitcoinManager(Bitcoin pluginInstance) {
+    LitecoinManager(Litecoin pluginInstance) {
         plugin = pluginInstance;
         util = plugin.getUtil();
         messages = plugin.getMessages();
@@ -51,21 +51,21 @@ class BitcoinManager implements Listener {
         playerFiles.clear();
         playerFileConfigs.clear();
         puzzlesSolved.clear();
-        bitcoinsMined.clear();
+        litecoinsMined.clear();
 
-        amountInBank = plugin.getBitcoinConfig().getDouble("amount_in_bank");
-        purchaseTaxPercentage = plugin.getBitcoinConfig().getDouble("purchase_tax_percentage");
-        bitcoinValue = plugin.getBitcoinConfig().getDouble("bitcoin_value");
-        displayRoundAmount = plugin.getBitcoinConfig().getInt("bitcoin_display_rounding");
-        exchangeCurrencySymbol = plugin.getBitcoinConfig().getString("exchange_currency_symbol");
-        circulationLimit = plugin.getBitcoinConfig().getDouble("circulation_limit");
-        world = Bukkit.getWorld(plugin.getBitcoinConfig().getString("world"));
+        amountInBank = plugin.getLitecoinConfig().getDouble("amount_in_bank");
+        purchaseTaxPercentage = plugin.getLitecoinConfig().getDouble("purchase_tax_percentage");
+        litecoinValue = plugin.getLitecoinConfig().getDouble("litecoin_value");
+        displayRoundAmount = plugin.getLitecoinConfig().getInt("litecoin_display_rounding");
+        exchangeCurrencySymbol = plugin.getLitecoinConfig().getString("exchange_currency_symbol");
+        circulationLimit = plugin.getLitecoinConfig().getDouble("circulation_limit");
+        world = Bukkit.getWorld(plugin.getLitecoinConfig().getString("world"));
         if (world == null) { world = Bukkit.getWorlds().get(0); }
-        minFluctuation = plugin.getBitcoinConfig().getDouble("min_bitcoin_value_fluctuation");
-        maxFluctuation = plugin.getBitcoinConfig().getDouble("max_bitcoin_value_fluctuation");
+        minFluctuation = plugin.getLitecoinConfig().getDouble("min_litecoin_value_fluctuation");
+        maxFluctuation = plugin.getLitecoinConfig().getDouble("max_litecoin_value_fluctuation");
         if (minFluctuation > maxFluctuation) {
-            minFluctuation = plugin.getBitcoinConfig().getDouble("max_bitcoin_value_fluctuation");
-            maxFluctuation = plugin.getBitcoinConfig().getDouble("min_bitcoin_value_fluctuation");
+            minFluctuation = plugin.getLitecoinConfig().getDouble("max_litecoin_value_fluctuation");
+            maxFluctuation = plugin.getLitecoinConfig().getDouble("min_litecoin_value_fluctuation");
         }
         File[] playerDataFiles = new File(plugin.getDataFolder() + File.separator + "Player Data").listFiles();
         if (playerDataFiles != null) {
@@ -76,13 +76,13 @@ class BitcoinManager implements Listener {
                 playerFileConfigs.put(playerUUID, config);
                 balances.put(playerUUID, config.getDouble("balance"));
                 puzzlesSolved.put(playerUUID, config.getInt("puzzles_solved"));
-                bitcoinsMined.put(playerUUID, config.getDouble("bitcoins_mined"));
+                litecoinsMined.put(playerUUID, config.getDouble("litecoins_mined"));
             }
         }
 
         if (timeChecker != null) { timeChecker.cancel(); }
         if (frequencyChecker != null) { frequencyChecker.cancel(); }
-        String frequencyString = plugin.getBitcoinConfig().getString("fluctuation_frequency");
+        String frequencyString = plugin.getLitecoinConfig().getString("fluctuation_frequency");
         if (frequencyString.contains(":")) {
             Long timeInTicks = util.getTicksFromTime(frequencyString);
             if (timeInTicks == null) { timeInTicks = 1L; }
@@ -103,19 +103,19 @@ class BitcoinManager implements Listener {
     Double getPurchaseTaxPercentage() { return purchaseTaxPercentage; }
     Double getBalance(UUID playerUUID) { return balances.get(playerUUID); }
     Integer getPuzzlesSolved(UUID playerUUID) { return puzzlesSolved.get(playerUUID); }
-    Double getBitcoinsMined(UUID playerUUID) { return bitcoinsMined.get(playerUUID); }
-    Double getBitcoinValue() { return bitcoinValue; }
+    Double getLitecoinsMined(UUID playerUUID) { return litecoinsMined.get(playerUUID); }
+    Double getLitecoinValue() { return litecoinValue; }
     Integer getDisplayRoundAmount() { return displayRoundAmount; }
     Double getCirculationLimit() { return circulationLimit; }
     String getExchangeCurrencySymbol() { return exchangeCurrencySymbol; }
 
-    Double getBitcoinsInCirculation() {
-        double bitcoins = 0;
+    Double getLitecoinsInCirculation() {
+        double litecoins = 0;
         for (double balance : balances.values()) {
-            bitcoins += balance;
+            litecoins += balance;
         }
-        bitcoins += amountInBank;
-        return bitcoins;
+        litecoins += amountInBank;
+        return litecoins;
     }
 
     List<OfflinePlayer> getTopPlayers() {
@@ -151,22 +151,22 @@ class BitcoinManager implements Listener {
         util.saveYml(playerFiles.get(playerUUID), playerFileConfigs.get(playerUUID));
     }
 
-    void setBitcoinsMined(UUID playerUUID, double amount) {
-        bitcoinsMined.put(playerUUID, amount);
-        playerFileConfigs.get(playerUUID).set("bitcoins_mined", bitcoinsMined.get(playerUUID));
+    void setLitecoinsMined(UUID playerUUID, double amount) {
+        litecoinsMined.put(playerUUID, amount);
+        playerFileConfigs.get(playerUUID).set("litecoins_mined", litecoinsMined.get(playerUUID));
         util.saveYml(playerFiles.get(playerUUID), playerFileConfigs.get(playerUUID));
     }
 
     void addToBank(double amount) {
         amountInBank += amount;
-        plugin.getBitcoinConfig().set("amount_in_bank", amountInBank);
-        util.saveYml(plugin.getConfigFile(), plugin.getBitcoinConfig());
+        plugin.getLitecoinConfig().set("amount_in_bank", amountInBank);
+        util.saveYml(plugin.getConfigFile(), plugin.getLitecoinConfig());
     }
 
     void removeFromBank(double amount) {
         amountInBank -= amount;
-        plugin.getBitcoinConfig().set("amount_in_bank", amountInBank);
-        util.saveYml(plugin.getConfigFile(), plugin.getBitcoinConfig());
+        plugin.getLitecoinConfig().set("amount_in_bank", amountInBank);
+        util.saveYml(plugin.getConfigFile(), plugin.getLitecoinConfig());
     }
 
     @EventHandler
@@ -181,26 +181,26 @@ class BitcoinManager implements Listener {
         YamlConfiguration playerFileConfig = playerFileConfigs.get(event.getPlayer().getUniqueId());
         if (!playerFileConfig.contains("balance")) { setBalance(event.getPlayer().getUniqueId(), 0); }
         if (!playerFileConfig.contains("puzzles_solved")) { setPuzzlesSolved(event.getPlayer().getUniqueId(), 0); }
-        if (!playerFileConfig.contains("bitcoins_mined")) { setBitcoinsMined(event.getPlayer().getUniqueId(), 0); }
+        if (!playerFileConfig.contains("litecoins_mined")) { setLitecoinsMined(event.getPlayer().getUniqueId(), 0); }
     }
 
     void fluctuate() {
         Random random = new Random();
         double fluctuation = util.round(2, minFluctuation + (random.nextDouble() * (maxFluctuation - minFluctuation)));
         if (random.nextBoolean()) { fluctuation = fluctuation * -1; }
-        if (bitcoinValue + fluctuation < 0) {
-            fluctuation = Math.abs(bitcoinValue);
-            bitcoinValue = 0;
+        if (litecoinValue + fluctuation < 0) {
+            fluctuation = Math.abs(litecoinValue);
+            litecoinValue = 0;
         } else {
-            bitcoinValue = util.round(2, bitcoinValue + fluctuation);
+            litecoinValue = util.round(2, litecoinValue + fluctuation);
         }
-        plugin.getBitcoinConfig().set("bitcoin_value", bitcoinValue);
-        util.saveYml(plugin.getConfigFile(), plugin.getBitcoinConfig());
+        plugin.getLitecoinConfig().set("litecoin_value", litecoinValue);
+        util.saveYml(plugin.getConfigFile(), plugin.getLitecoinConfig());
         for (Player player : Bukkit.getOnlinePlayers()) {
-            if (bitcoinValue > (bitcoinValue - fluctuation)) {
-                player.sendMessage(messages.getMessage("value_increase").replace("{VALUE}", exchangeCurrencySymbol + bitcoinValue).replace("{CHANGE}", exchangeCurrencySymbol + (fluctuation)));
+            if (litecoinValue > (litecoinValue - fluctuation)) {
+                player.sendMessage(messages.getMessage("value_increase").replace("{VALUE}", exchangeCurrencySymbol + litecoinValue).replace("{CHANGE}", exchangeCurrencySymbol + (fluctuation)));
             } else {
-                player.sendMessage(messages.getMessage("value_decrease").replace("{VALUE}", exchangeCurrencySymbol + bitcoinValue).replace("{CHANGE}", exchangeCurrencySymbol + (fluctuation * -1)));
+                player.sendMessage(messages.getMessage("value_decrease").replace("{VALUE}", exchangeCurrencySymbol + litecoinValue).replace("{CHANGE}", exchangeCurrencySymbol + (fluctuation * -1)));
             }
             player.playSound(player.getLocation(), sounds.getSound("value_change"), 1, 1);
         }

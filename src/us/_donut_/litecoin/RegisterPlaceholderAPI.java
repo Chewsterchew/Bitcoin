@@ -1,37 +1,37 @@
-package us._donut_.bitcoin;
+package us._donut_.litecoin;
 
 import me.clip.placeholderapi.external.EZPlaceholderHook;
 import org.bukkit.entity.Player;
 
 public class RegisterPlaceholderAPI extends EZPlaceholderHook {
 
-    private BitcoinManager bitcoinManager;
+    private LitecoinManager litecoinManager;
 
-    public RegisterPlaceholderAPI(Bitcoin pluginInstance) {
-        super(pluginInstance, "bitcoin");
-        bitcoinManager = pluginInstance.getBitcoinManager();
+    public RegisterPlaceholderAPI(Litecoin pluginInstance) {
+        super(pluginInstance, "litecoin");
+        litecoinManager = pluginInstance.getLitecoinManager();
     }
 
     @Override
     public String onPlaceholderRequest(Player player, String identifier) {
         if (identifier.equals("value")) {
-            return bitcoinManager.getExchangeCurrencySymbol() + bitcoinManager.getBitcoinValue();
+            return litecoinManager.getExchangeCurrencySymbol() + litecoinManager.getLitecoinValue();
         }
 
         if (identifier.equals("bank")) {
-            return String.valueOf(bitcoinManager.getAmountInBank());
+            return String.valueOf(litecoinManager.getAmountInBank());
         }
 
         if (identifier.equals("tax")) {
-            return bitcoinManager.getPurchaseTaxPercentage() + "%";
+            return litecoinManager.getPurchaseTaxPercentage() + "%";
         }
 
         if (identifier.equals("circulation")) {
-            return String.valueOf(bitcoinManager.getBitcoinsInCirculation());
+            return String.valueOf(litecoinManager.getLitecoinsInCirculation());
         }
 
         if (identifier.equals("circulation_limit")) {
-            return String.valueOf(bitcoinManager.getCirculationLimit());
+            return String.valueOf(litecoinManager.getCirculationLimit());
         }
 
         if (player == null) {
@@ -39,15 +39,15 @@ public class RegisterPlaceholderAPI extends EZPlaceholderHook {
         }
 
         if (identifier.equals("balance")) {
-            return String.valueOf(bitcoinManager.getBalance(player.getUniqueId()));
+            return String.valueOf(litecoinManager.getBalance(player.getUniqueId()));
         }
 
         if (identifier.equals("amount_mined")) {
-            return String.valueOf(bitcoinManager.getBitcoinsMined(player.getUniqueId()));
+            return String.valueOf(litecoinManager.getLitecoinsMined(player.getUniqueId()));
         }
 
         if (identifier.equals("puzzles_solved")) {
-            return String.valueOf(bitcoinManager.getPuzzlesSolved(player.getUniqueId()));
+            return String.valueOf(litecoinManager.getPuzzlesSolved(player.getUniqueId()));
         }
         return null;
     }

@@ -1,4 +1,4 @@
-package us._donut_.bitcoin;
+package us._donut_.litecoin;
 
 import me.BukkitPVP.PointsAPI.PointsAPI;
 import net.milkbowl.vault.economy.Economy;
@@ -9,13 +9,13 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 class ServerEconomy {
 
-    private Bitcoin plugin;
+    private Litecoin plugin;
     private Economy economy;
     private Boolean usePlayerPoints;
     private Boolean usePointsAPI;
     private PlayerPointsAPI playerPointsAPI;
 
-    ServerEconomy(Bitcoin pluginInstance) {
+    ServerEconomy(Litecoin pluginInstance) {
         plugin = pluginInstance;
         RegisteredServiceProvider<Economy> economyProvider = plugin.getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
         if (economyProvider != null) { economy = economyProvider.getProvider(); }
@@ -31,8 +31,8 @@ class ServerEconomy {
     }
 
     void reload() {
-        usePointsAPI = plugin.getBitcoinConfig().getBoolean("use_pointsapi");
-        usePlayerPoints = plugin.getBitcoinConfig().getBoolean("use_playerpoints");
+        usePointsAPI = plugin.getLitecoinConfig().getBoolean("use_pointsapi");
+        usePlayerPoints = plugin.getLitecoinConfig().getBoolean("use_playerpoints");
         if (usePlayerPoints) {
             playerPointsAPI = PlayerPoints.class.cast(plugin.getServer().getPluginManager().getPlugin("PlayerPoints")).getAPI();
         }

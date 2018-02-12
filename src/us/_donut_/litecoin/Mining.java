@@ -1,4 +1,4 @@
-package us._donut_.bitcoin;
+package us._donut_.litecoin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -17,11 +17,11 @@ import java.util.*;
 
 class Mining implements Listener {
 
-    private Bitcoin plugin;
+    private Litecoin plugin;
     private Util util;
     private Messages messages;
     private Sounds sounds;
-    private BitcoinManager bitcoinManager;
+    private LitecoinManager litecoinManager;
     private ItemStack resetButton;
     private ItemStack solveButton;
     private ItemStack exitButton;
@@ -37,10 +37,10 @@ class Mining implements Listener {
     private double reward;
     private long newPuzzleDelay;
 
-    Mining(Bitcoin pluginInstance) {
+    Mining(Litecoin pluginInstance) {
         plugin = pluginInstance;
         util = plugin.getUtil();
-        bitcoinManager = plugin.getBitcoinManager();
+        litecoinManager = plugin.getLitecoinManager();
         messages = plugin.getMessages();
         sounds = plugin.getSounds();
 
@@ -54,9 +54,9 @@ class Mining implements Listener {
         }
         miningInterfaces.clear();
         coloredGlass.clear();
-        minReward = plugin.getBitcoinConfig().getDouble("min_mining_reward");
-        maxReward = plugin.getBitcoinConfig().getDouble("max_mining_reward");
-        newPuzzleDelay = plugin.getBitcoinConfig().getLong("new_mining_puzzle_delay");
+        minReward = plugin.getLitecoinConfig().getDouble("min_mining_reward");
+        maxReward = plugin.getLitecoinConfig().getDouble("max_mining_reward");
+        newPuzzleDelay = plugin.getLitecoinConfig().getLong("new_mining_puzzle_delay");
         resetButton = util.createItemStack(Material.TNT, (short) 0, messages.getMessage("reset_item_name"), messages.getMessage("reset_item_lore"));
         solveButton = util.createItemStack(Material.SLIME_BALL, (short) 0, messages.getMessage("solve_item_name"), messages.getMessage("solve_item_lore"));
         exitButton = util.createItemStack(Material.BARRIER, (short) 0, messages.getMessage("exit_item_name"), messages.getMessage("exit_item_lore"));
@@ -199,17 +199,17 @@ class Mining implements Listener {
                     new BukkitRunnable() {
                         @Override
                         public void run() {
-                            if (bitcoinManager.getBitcoinsInCirculation() >= bitcoinManager.getCirculationLimit()) { reward = 0; cancel(); }
-                            if (bitcoinManager.getCirculationLimit() > 0 && bitcoinManager.getBitcoinsInCirculation() + reward >= bitcoinManager.getCirculationLimit()) {
+                            if (litecoinManager.getLitecoinsInCirculation() >= litecoinManager.getCirculationLimit()) { reward = 0; cancel(); }
+                            if (litecoinManager.getCirculationLimit() > 0 && litecoinManager.getLitecoinsInCirculation() + reward >= litecoinManager.getCirculationLimit()) {
                                 reward = reward / 2.0;
                             } else {
                                 cancel();
                             }
                         }
                     }.runTaskTimer(plugin, 0, 1);
-                    bitcoinManager.deposit(player.getUniqueId(), reward);
-                    bitcoinManager.setPuzzlesSolved(player.getUniqueId(), bitcoinManager.getPuzzlesSolved(player.getUniqueId()) + 1);
-                    bitcoinManager.setBitcoinsMined(player.getUniqueId(), bitcoinManager.getBitcoinsMined(player.getUniqueId()) + reward);
+                    litecoinManager.deposit(player.getUniqueId(), reward);
+                    litecoinManager.setPuzzlesSolved(player.getUniqueId(), litecoinManager.getPuzzlesSolved(player.getUniqueId()) + 1);
+                    litecoinManager.setLitecoinsMined(player.getUniqueId(), litecoinManager.getLitecoinsMined(player.getUniqueId()) + reward);
                     player.sendMessage(messages.getMessage("reward").replace("{REWARD}", String.valueOf(reward)));
                     for (Player loopPlayer : Bukkit.getOnlinePlayers()) {
                         if (loopPlayer.getOpenInventory().getTitle().equalsIgnoreCase(messages.getMessage("mining_menu_title"))) { loopPlayer.closeInventory(); }
