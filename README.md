@@ -8,6 +8,10 @@ If you want a secondary bitcoin currency in your game, for some reason, go ahead
 
 ## Permissions and Commands
 
-The permissions are very similar to bitcoins, just replace /bitcoin with /litecoin and the bitcoin.perm with litecoin.perm.
+The permissions are very similar to bitcoin's, just replace /bitcoin with /litecoin and the bitcoin.perm with litecoin.perm.
 
 Permission list can be found on the [Bitcoin Spigot Page](https://www.spigotmc.org/resources/bitcoin.52085/).
+
+## Unique Features to this plugin only!
+
+- Some permissions that should be default are!
