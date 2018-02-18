@@ -27,6 +27,7 @@ class LitecoinManager implements Listener {
     private Map<UUID, File> playerFiles = new HashMap<>();
     private Map<UUID, YamlConfiguration> playerFileConfigs = new HashMap<>();
     private double litecoinValue;
+    private double litecoinMinValue;
     private int displayRoundAmount;
     private double minFluctuation;
     private double maxFluctuation;
@@ -56,6 +57,7 @@ class LitecoinManager implements Listener {
         amountInBank = plugin.getLitecoinConfig().getDouble("amount_in_bank");
         purchaseTaxPercentage = plugin.getLitecoinConfig().getDouble("purchase_tax_percentage");
         litecoinValue = plugin.getLitecoinConfig().getDouble("litecoin_value");
+        litecoinMinValue = plugin.getLitecoinConfig().getDouble("litecoin_min_value");
         displayRoundAmount = plugin.getLitecoinConfig().getInt("litecoin_display_rounding");
         exchangeCurrencySymbol = plugin.getLitecoinConfig().getString("exchange_currency_symbol");
         circulationLimit = plugin.getLitecoinConfig().getDouble("circulation_limit");
@@ -188,16 +190,16 @@ class LitecoinManager implements Listener {
         Random random = new Random();
         double fluctuation = util.round(2, minFluctuation + (random.nextDouble() * (maxFluctuation - minFluctuation)));
         if (random.nextBoolean()) { fluctuation = fluctuation * -1; }
-        if (litecoinValue + fluctuation < 0) {
-            fluctuation = Math.abs(litecoinValue);
-            litecoinValue = 0;
+        if (litecoinValue + fluctuation < litecoinMinValue) {
+            fluctuation = util.round(2,litecoinValue - litecoinMinValue);
+            litecoinValue = litecoinMinValue;
         } else {
             litecoinValue = util.round(2, litecoinValue + fluctuation);
         }
         plugin.getLitecoinConfig().set("litecoin_value", litecoinValue);
         util.saveYml(plugin.getConfigFile(), plugin.getLitecoinConfig());
         for (Player player : Bukkit.getOnlinePlayers()) {
-            if (litecoinValue > (litecoinValue - fluctuation)) {
+            if (litecoinValue > (litecoinValue - fluctuation) && litecoinValue != litecoinMinValue) {
                 player.sendMessage(messages.getMessage("value_increase").replace("{VALUE}", exchangeCurrencySymbol + litecoinValue).replace("{CHANGE}", exchangeCurrencySymbol + (fluctuation)));
             } else {
                 player.sendMessage(messages.getMessage("value_decrease").replace("{VALUE}", exchangeCurrencySymbol + litecoinValue).replace("{CHANGE}", exchangeCurrencySymbol + (fluctuation * -1)));

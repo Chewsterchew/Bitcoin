@@ -37,6 +37,7 @@ class Util {
     void loadConfigDefaults() {
         YamlConfiguration litecoinConfig = plugin.getLitecoinConfig();
         if (!litecoinConfig.contains("litecoin_value")) { litecoinConfig.set("litecoin_value", 1000); }
+        if (!litecoinConfig.contains("litecoin_min_value")) { litecoinConfig.set("litecoin_min_value", 0); }
         if (!litecoinConfig.contains("amount_in_bank")) { litecoinConfig.set("amount_in_bank", 0); }
         if (!litecoinConfig.contains("litecoin_display_rounding")) { litecoinConfig.set("litecoin_display_rounding", 5); }
         if (!litecoinConfig.contains("purchase_tax_percentage")) { litecoinConfig.set("purchase_tax_percentage", 15); }

@@ -1,5 +1,5 @@
 name: Litecoin
-version: 1.4
+version: 1.5
 author: ChewLeKitten
 main: us._donut_.litecoin.Litecoin
 depend: [Vault]
@@ -32,6 +32,8 @@ permissions:
       litecoin.gui.buy: true
       litecoin.gui.sell: true
       litecoin.gui.mine: true
+      litecoin.blackmarket: true
+      litecoin.blackmarket.edit: true
   litecoin.main:
     description: Allows /litecoin
     default: op
