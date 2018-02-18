@@ -36,31 +36,31 @@ permissions:
       litecoin.blackmarket.edit: true
   litecoin.main:
     description: Allows /litecoin
-    default: op
+    default: true
   litecoin.help:
     description: Allows /litecoin help
-    default: op
+    default: true
   litecoin.value:
     description: Allows /litecoin value
-    default: op
+    default: true
   litecoin.bank:
     description: Allows /litecoin bank
-    default: op
+    default: true
   litecoin.tax:
     description: Allows /litecoin tax
-    default: op
+    default: true
   litecoin.mine:
     description: Allows /litecoin mine
-    default: op
+    default: true
   litecoin.sell:
     description: Allows /litecoin sell
-    default: op
+    default: true
   litecoin.buy:
     description: Allows /litecoin buy
-    default: op
+    default: true
   litecoin.transfer:
     description: Allows /litecoin transfer
-    default: op
+    default: true
   litecoin.give:
     description: Allows /litecoin give
     default: op
@@ -75,22 +75,28 @@ permissions:
     default: op
   litecoin.stats:
     description: Allows /litecoin stats
-    default: op
+    default: true
   litecoin.top:
     description: Allows /litecoin top
-    default: op
+    default: true
   litecoin.circulation:
     description: Allows /litecoin circulation
-    default: op
+    default: true
   litecoin.gui.transfer:
     description: Allows transferring from GUI
-    default: op
+    default: true
   litecoin.gui.buy:
     description: Allows buying from GUI
-    default: op
+    default: true
   litecoin.gui.sell:
     description: Allows selling from GUI
-    default: op
+    default: true
   litecoin.gui.mine:
     description: Allows mining from GUI
+    default: true
+  litecoin.blackmarket:
+    description: Allows /litecoin blackmarket
+    default: true
+  litecoin.blackmarket.edit:
+    description: Allows editing of black market
     default: op
